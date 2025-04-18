@@ -1,0 +1,32 @@
+{
+  "name": "anisthesia-js",
+  "version": "0.1.0",
+  "description": "Node.js wrapper for the Anisthesia C++ media detection library",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build",
+    "configure": "node-gyp configure",
+    "clean": "node-gyp clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "anisthesia",
+    "media",
+    "detection",
+    "windows",
+    "native",
+    "addon",
+    "napi"
+  ],
+  "author": "Laesx/Anisthesia-js",
+  "license": "MIT",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^7.0.0" 
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0" 
+  }
+}

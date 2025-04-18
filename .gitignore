@@ -1,6 +1,6 @@
 /build/
 /node_modules/
-/lib/anitomy/build/
+/lib/anisthesia/build/
 npm-debug.log
 /.vscode/
 /typings/
@@ -10,4 +10,3 @@ jsconfig.json
 .vs/
 package-lock.json
 debug.js
-.yarn
