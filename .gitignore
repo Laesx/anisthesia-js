@@ -1,0 +1,13 @@
+/build/
+/node_modules/
+/lib/anitomy/build/
+npm-debug.log
+/.vscode/
+/typings/
+jsconfig.json
+/.idea/
+.DS_Store
+.vs/
+package-lock.json
+debug.js
+.yarn

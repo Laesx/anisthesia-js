@@ -1,0 +1,6 @@
+[submodule "lib/anisthesia"]
+	path = lib/anisthesia
+	url = https://github.com/erengy/anisthesia.git
+[submodule "lib/anitomy-js"]
+	path = lib/anitomy-js
+	url = https://github.com/sugiruu/anitomy-js.git
