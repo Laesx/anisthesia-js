@@ -13,8 +13,16 @@ It detects running media players and web browsers and retrieves information abou
 
 ## Installation
 
+Clone the repo, go into lib, initialize the submodules and then update them like so:
+
 ```bash
-# If published to npm:
+git clone https://github.com/Laesx/anisthesia-js.git
+git submodule init
+git submodule update
+```
+
+```bash
+# Not yet published to npm:
 # npm install anisthesia-js
 
 # For local development/use:
