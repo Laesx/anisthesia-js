@@ -7,24 +7,46 @@ const anisthesia = require('./index'); // Require the addon entry point
 const configPath = path.join(__dirname, 'lib', 'anisthesia', 'data', 'players.anisthesia');
 // const configPath = 'lib/anisthesia/data/players.anisthesia'; // Relative path might also work
 
-console.log(`Attempting to load Anisthesia config from: ${configPath}`);
+console.log(`Default config path: ${path.join(__dirname, 'lib', 'anisthesia', 'data', 'players.anisthesia')}`);
+console.log(`Custom config path example: ${configPath}`); // Keep the specific path example for clarity
 
+// --- Test with Default Config ---
 try {
-  console.log("Calling getMediaResultsSync...");
-  const results = anisthesia.getMediaResultsSync(configPath);
+  console.log("\nCalling getMediaResultsSync() with default config...");
+  const resultsDefault = anisthesia.getMediaResultsSync(); // Call without argument
 
-  console.log("\n--- Detection Results ---");
-  if (results.length === 0) {
-    console.log("(No running media players detected matching the config)");
+  console.log("\n--- Detection Results (Default Config) ---");
+  if (resultsDefault.length === 0) {
+    console.log("(No running media players detected matching the default config)");
   } else {
-    console.log(JSON.stringify(results, null, 2));
+    console.log(JSON.stringify(resultsDefault, null, 2));
   }
-  console.log("-------------------------\n");
-  console.log("Test completed successfully.");
+  console.log("------------------------------------------\n");
 
 } catch (error) {
-  console.error("\n--- ERROR ---");
-  console.error("Failed to run detection:", error);
-  console.error("-------------\n");
+  console.error("\n--- ERROR (Default Config) ---");
+  console.error("Failed to run detection with default config:", error);
+  console.error("--------------------------------\n");
+  process.exitCode = 1; // Indicate failure
+}
+
+
+// --- Test with Explicit Config Path (Optional, keep for comparison/testing) ---
+try {
+  console.log(`\nCalling getMediaResultsSync("${configPath}")...`);
+  const resultsExplicit = anisthesia.getMediaResultsSync(configPath); // Call with explicit argument
+
+  console.log("\n--- Detection Results (Explicit Config) ---");
+  if (resultsExplicit.length === 0) {
+    console.log("(No running media players detected matching the explicit config)");
+  } else {
+    console.log(JSON.stringify(resultsExplicit, null, 2));
+  }
+  console.log("-------------------------------------------\n");
+
+} catch (error) {
+  console.error("\n--- ERROR (Explicit Config) ---");
+  console.error("Failed to run detection with explicit config:", error);
+  console.error("---------------------------------\n");
   process.exitCode = 1; // Indicate failure
 }

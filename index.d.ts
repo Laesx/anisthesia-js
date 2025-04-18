@@ -59,27 +59,27 @@ declare module 'anisthesia-js' {
 
   /**
    * Synchronously detects running media players and retrieves media info.
-   * @param playersConfigPath Path to the players.anisthesia configuration file.
+   * @param [playersConfigPath] Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
    * @returns An array of detected media results.
    * @throws If the native addon is not loaded or an error occurs during detection.
    */
-  export function getMediaResultsSync(playersConfigPath: string): DetectionResult[];
+  export function getMediaResultsSync(playersConfigPath?: string): DetectionResult[];
 
   /**
    * Asynchronously detects running media players and retrieves media info.
-   * @param playersConfigPath Path to the players.anisthesia configuration file.
+   * @param [playersConfigPath] Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
    * @returns A promise that resolves with an array of detected media results.
    * @rejects If the native addon is not loaded or an error occurs during detection.
    */
-  export function getMediaResultsAsync(playersConfigPath: string): Promise<DetectionResult[]>;
+  export function getMediaResultsAsync(playersConfigPath?: string): Promise<DetectionResult[]>;
 
   /**
    * Asynchronously detects running media players and retrieves media info.
    * (Alias for getMediaResultsAsync)
-   * @param playersConfigPath Path to the players.anisthesia configuration file.
+   * @param [playersConfigPath] Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
    * @returns A promise that resolves with an array of detected media results.
    * @rejects If the native addon is not loaded or an error occurs during detection.
    */
-  export function getMediaResults(playersConfigPath: string): Promise<DetectionResult[]>;
+  export function getMediaResults(playersConfigPath?: string): Promise<DetectionResult[]>;
 
 }
