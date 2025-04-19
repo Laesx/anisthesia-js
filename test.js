@@ -32,20 +32,18 @@ try {
 
 // --- Test with Explicit Config Path (Optional, keep for comparison/testing) ---
 try {
-  console.log(`\nCalling getPlayerListSync() default conf...`); // Update log message to reflect the correct function
-  const resultsExplicit = anisthesia.getPlayerListSync(); // Call without explicit argument
+  console.log(`\nCalling getPlayerListSync() default conf...`);
 
-  console.log("\n--- Detection Results (Default Config) ---");
-  if (resultsExplicit.length === 0) {
-    console.log("(No running media players detected matching the default config)");
-  } else {
-    console.log(JSON.stringify(resultsExplicit, null, 2));
-  }
+
+  const list = anisthesia.getPlayerListSync();
+
+  console.log("Supported Players:", list.players);
+  console.log("Supported Browsers:", list.browsers);
+
   console.log("-------------------------------------------\n");
 
 } catch (error) {
-  console.error("\n--- ERROR (Default Config) ---");
-  console.error("Failed to run detection with default config:", error);
+  console.error("Error getting player list:", error);
   console.error("---------------------------------\n");
   process.exitCode = 1; // Indicate failure
 }

@@ -88,9 +88,9 @@ declare module 'anisthesia-js' {
    * containing the names of all defined players and browsers.
    *
    * @param [configPath] Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
-   * @returns An array of strings containing player names.
+   * @returns An object containing two arrays: 'players' (for default players) and 'browsers' (for web browsers).
    * @throws If the native addon is not loaded or an error occurs during parsing.
    */
-  export function getPlayerListSync(configPath?: string): string[];
+  export function getPlayerListSync(configPath?: string): { players: string[]; browsers: string[] };
 
 }

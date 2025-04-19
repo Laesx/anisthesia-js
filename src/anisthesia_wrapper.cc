@@ -148,14 +148,35 @@ Napi::Value GetPlayerListWrapped(Napi::Env env, const std::string& configPath) {
         return env.Null(); // Return null on error
     }
 
-    // 2. Extract Player Names and Convert to Napi::Array
-    Napi::Array napiPlayerNames = Napi::Array::New(env, players.size());
-    for (size_t i = 0; i < players.size(); ++i) {
-        napiPlayerNames.Set(i, Napi::String::New(env, players[i].name));
+    // 2. Extract Player Names and Categorize
+    std::vector<std::string> playerNames;
+    std::vector<std::string> browserNames;
+
+    for (const auto& player : players) {
+        if (player.type == anisthesia::PlayerType::WebBrowser) {
+            browserNames.push_back(player.name);
+        } else {
+            playerNames.push_back(player.name);
+        }
     }
 
-    // 3. Return the Array
-    return napiPlayerNames;
+    // 3. Convert to Napi::Object with two arrays
+    Napi::Object result = Napi::Object::New(env);
+    Napi::Array napiPlayers = Napi::Array::New(env, playerNames.size());
+    Napi::Array napiBrowsers = Napi::Array::New(env, browserNames.size());
+
+    for (size_t i = 0; i < playerNames.size(); ++i) {
+        napiPlayers.Set(i, Napi::String::New(env, playerNames[i]));
+    }
+    for (size_t i = 0; i < browserNames.size(); ++i) {
+        napiBrowsers.Set(i, Napi::String::New(env, browserNames[i]));
+    }
+
+    result.Set("players", napiPlayers);
+    result.Set("browsers", napiBrowsers);
+
+    // 4. Return the Object
+    return result;
 }
 
 

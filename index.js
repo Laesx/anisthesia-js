@@ -56,9 +56,9 @@ function getMediaResultsAsync(playersConfigPath) {
 }
 
 /**
- * Synchronously retrieves a list of player names defined in the configuration file.
+ * Synchronously retrieves a categorized list of player and browser names defined in the configuration file.
  * @param {string} [configPath] - Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
- * @returns {Array<string>} An array of strings containing player names.
+ * @returns {{players: Array<string>, browsers: Array<string>}} An object containing two arrays: 'players' (for default players) and 'browsers' (for web browsers).
  * @throws {Error} If the native addon is not loaded or an error occurs during parsing.
  */
 function getPlayerListSync(configPath) {
