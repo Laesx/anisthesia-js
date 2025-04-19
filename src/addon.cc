@@ -31,6 +31,40 @@ Napi::Value GetMediaResultsSync(const Napi::CallbackInfo& info) {
     }
 }
 
+// Wrapper function for getting the player list synchronously
+Napi::Value GetPlayerListSync(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    std::string configPath = "lib/anisthesia/data/players.anisthesia"; // Default path
+
+    // 1. Validate input arguments (expecting zero or one string argument)
+    if (info.Length() > 1) {
+        Napi::TypeError::New(env, "Expected 0 or 1 argument (optional configPath: string)").ThrowAsJavaScriptException();
+        return env.Undefined();
+    }
+    if (info.Length() == 1) {
+        if (info[0].IsString()) {
+            configPath = info[0].As<Napi::String>().Utf8Value();
+        } else if (!info[0].IsUndefined() && !info[0].IsNull()) {
+            // Allow undefined/null to use default, but error on other types
+            Napi::TypeError::New(env, "Optional argument configPath must be a string, null, or undefined").ThrowAsJavaScriptException();
+            return env.Undefined();
+        }
+        // If undefined or null, we just keep the default path
+    }
+
+    // 2. Call the C++ wrapper implementation
+    try {
+        return anisthesia_js::GetPlayerListWrapped(env, configPath);
+    } catch (const std::exception& e) {
+        Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();
+        return env.Undefined();
+    } catch (...) {
+        Napi::Error::New(env, "An unknown error occurred in the native addon.").ThrowAsJavaScriptException();
+        return env.Undefined();
+    }
+}
+
+
 // Placeholder for the asynchronous NAPI call wrapper
 Napi::Value GetMediaResultsAsync(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
@@ -61,6 +95,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
                 Napi::Function::New(env, GetMediaResultsSync));
     exports.Set(Napi::String::New(env, "getMediaResultsAsync"),
                 Napi::Function::New(env, GetMediaResultsAsync));
+    exports.Set(Napi::String::New(env, "getPlayerListSync"),
+                Napi::Function::New(env, GetPlayerListSync));
     return exports;
 }
 

@@ -138,4 +138,25 @@ Napi::Value GetResultsWrapped(Napi::Env env, const std::string& configPath) {
     return napiResults;
 }
 
+// Implementation of the GetPlayerListWrapped function
+Napi::Value GetPlayerListWrapped(Napi::Env env, const std::string& configPath) {
+    // 1. Load Player Definitions
+    std::vector<anisthesia::Player> players;
+    if (!anisthesia::ParsePlayersFile(configPath, players)) {
+        // Use Napi::Error::New for JS-friendly errors
+        Napi::Error::New(env, "Failed to parse players configuration file: " + configPath).ThrowAsJavaScriptException();
+        return env.Null(); // Return null on error
+    }
+
+    // 2. Extract Player Names and Convert to Napi::Array
+    Napi::Array napiPlayerNames = Napi::Array::New(env, players.size());
+    for (size_t i = 0; i < players.size(); ++i) {
+        napiPlayerNames.Set(i, Napi::String::New(env, players[i].name));
+    }
+
+    // 3. Return the Array
+    return napiPlayerNames;
+}
+
+
 } // namespace anisthesia_js

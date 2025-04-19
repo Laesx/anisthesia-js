@@ -82,4 +82,15 @@ declare module 'anisthesia-js' {
    */
   export function getMediaResults(playersConfigPath?: string): Promise<DetectionResult[]>;
 
+  /**
+   * Synchronously retrieves a list of player names defined in the configuration file.
+   * Parses the specified or default configuration file and returns an array
+   * containing the names of all defined players and browsers.
+   *
+   * @param [configPath] Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
+   * @returns An array of strings containing player names.
+   * @throws If the native addon is not loaded or an error occurs during parsing.
+   */
+  export function getPlayerListSync(configPath?: string): string[];
+
 }

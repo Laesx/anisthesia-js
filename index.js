@@ -19,7 +19,8 @@ try {
   // Provide dummy functions or re-throw based on desired behavior
   anisthesiaNative = {
     getMediaResultsSync: () => { throw new Error("Native addon not loaded."); },
-    getMediaResultsAsync: () => Promise.reject(new Error("Native addon not loaded."))
+    getMediaResultsAsync: () => Promise.reject(new Error("Native addon not loaded.")),
+    getPlayerListSync: () => { throw new Error("Native addon not loaded."); } // Add dummy for new function
   };
 }
 
@@ -54,11 +55,40 @@ function getMediaResultsAsync(playersConfigPath) {
   return anisthesiaNative.getMediaResultsAsync(configPath);
 }
 
+/**
+ * Synchronously retrieves a list of player names defined in the configuration file.
+ * @param {string} [configPath] - Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
+ * @returns {Array<string>} An array of strings containing player names.
+ * @throws {Error} If the native addon is not loaded or an error occurs during parsing.
+ */
+function getPlayerListSync(configPath) {
+  // Use default path if configPath is undefined, otherwise use the provided path.
+  // The native addon handles the case where configPath is explicitly null or an empty string if needed,
+  // but we default to the standard config here if undefined is passed.
+  const actualConfigPath = configPath === undefined ? DEFAULT_CONFIG_PATH : configPath;
+
+  // The native addon now handles the logic for default path if null/undefined is passed,
+  // but we still need to pass *something*. Let's pass the resolved path or null if the input was explicitly null.
+  // The C++ side expects a string path. Let's ensure we pass the default if undefined.
+  const pathToSend = configPath === undefined ? DEFAULT_CONFIG_PATH : configPath;
+
+  // Validate that the path to send to native code is a string or null/undefined (which C++ handles)
+  if (typeof pathToSend !== 'string' && pathToSend !== null && pathToSend !== undefined) {
+      throw new Error('Optional configPath must be a string, null, or undefined.');
+  }
+
+  // Call the native function. The C++ side will use its default if pathToSend is null/undefined or handle the string path.
+  // Correction: The C++ addon expects the path argument. Let's pass the resolved path.
+  // The C++ addon wrapper `GetPlayerListSync` now explicitly handles undefined/null/string.
+  return anisthesiaNative.getPlayerListSync(configPath); // Pass the original argument directly
+}
+
 
 // --- Exports ---
 
 module.exports = {
   getMediaResultsSync,
   getMediaResultsAsync,
-  getMediaResults: getMediaResultsAsync
+  getMediaResults: getMediaResultsAsync, // Alias
+  getPlayerListSync // Add the new function
 };
