@@ -63,7 +63,7 @@ declare module 'anisthesia-js' {
    * @returns An array of detected media results.
    * @throws If the native addon is not loaded or an error occurs during detection.
    */
-  export function getMediaResultsSync(playersConfigPath?: string): DetectionResult[];
+  export function getMediaResults(playersConfigPath?: string): DetectionResult[];
 
   /**
    * Synchronously retrieves a list of player names defined in the configuration file.
@@ -74,6 +74,6 @@ declare module 'anisthesia-js' {
    * @returns An object containing two arrays: 'players' (for default players) and 'browsers' (for web browsers).
    * @throws If the native addon is not loaded or an error occurs during parsing.
    */
-  export function getPlayerListSync(configPath?: string): { players: string[]; browsers: string[] };
+  export function getPlayerList(configPath?: string): { players: string[]; browsers: string[] };
 
 }
