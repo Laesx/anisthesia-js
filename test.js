@@ -12,8 +12,8 @@ console.log(`Custom config path example: ${configPath}`); // Keep the specific p
 
 // --- Test with Default Config ---
 try {
-  console.log("\nCalling getMediaResultsSync() with default config...");
-  const resultsDefault = anisthesia.getMediaResultsSync(); // Call without argument
+  console.log("\nCalling getMediaResults() with default config...");
+  const resultsDefault = anisthesia.getMediaResults(); // Call without argument
 
   console.log("\n--- Detection Results (Default Config) ---");
   if (resultsDefault.length === 0) {
@@ -32,10 +32,10 @@ try {
 
 // --- Test with Explicit Config Path (Optional, keep for comparison/testing) ---
 try {
-  console.log(`\nCalling getPlayerListSync() default conf...`);
+  console.log(`\nCalling getPlayerList() default conf...`);
 
 
-  const list = anisthesia.getPlayerListSync();
+  const list = anisthesia.getPlayerList();
 
   console.log("Supported Players:", list.players);
   console.log("Supported Browsers:", list.browsers);
@@ -51,8 +51,8 @@ try {
 
 // --- Test with Explicit Config Path (Optional, keep for comparison/testing) ---
 // try {
-//   console.log(`\nCalling getMediaResultsSync("${configPath}")...`);
-//   const resultsExplicit = anisthesia.getMediaResultsSync(configPath); // Call with explicit argument
+//   console.log(`\nCalling getMediaResults("${configPath}")...`);
+//   const resultsExplicit = anisthesia.getMediaResults(configPath); // Call with explicit argument
 
 //   console.log("\n--- Detection Results (Explicit Config) ---");
 //   if (resultsExplicit.length === 0) {

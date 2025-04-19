@@ -66,23 +66,6 @@ declare module 'anisthesia-js' {
   export function getMediaResultsSync(playersConfigPath?: string): DetectionResult[];
 
   /**
-   * Asynchronously detects running media players and retrieves media info.
-   * @param [playersConfigPath] Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
-   * @returns A promise that resolves with an array of detected media results.
-   * @rejects If the native addon is not loaded or an error occurs during detection.
-   */
-  export function getMediaResultsAsync(playersConfigPath?: string): Promise<DetectionResult[]>;
-
-  /**
-   * Asynchronously detects running media players and retrieves media info.
-   * (Alias for getMediaResultsAsync)
-   * @param [playersConfigPath] Optional path to the players.anisthesia configuration file. Defaults to the included file if omitted.
-   * @returns A promise that resolves with an array of detected media results.
-   * @rejects If the native addon is not loaded or an error occurs during detection.
-   */
-  export function getMediaResults(playersConfigPath?: string): Promise<DetectionResult[]>;
-
-  /**
    * Synchronously retrieves a list of player names defined in the configuration file.
    * Parses the specified or default configuration file and returns an array
    * containing the names of all defined players and browsers.

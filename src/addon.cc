@@ -5,7 +5,7 @@
 namespace anisthesia_js {
 
 // Wrapper function for the synchronous NAPI call
-Napi::Value GetMediaResultsSync(const Napi::CallbackInfo& info) {
+Napi::Value GetMediaResults(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
     // 1. Validate input arguments (expecting one string: playersConfigPath)
@@ -32,7 +32,7 @@ Napi::Value GetMediaResultsSync(const Napi::CallbackInfo& info) {
 }
 
 // Wrapper function for getting the player list synchronously
-Napi::Value GetPlayerListSync(const Napi::CallbackInfo& info) {
+Napi::Value GetPlayerList(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     std::string configPath = "lib/anisthesia/data/players.anisthesia"; // Default path
 
@@ -65,38 +65,14 @@ Napi::Value GetPlayerListSync(const Napi::CallbackInfo& info) {
 }
 
 
-// Placeholder for the asynchronous NAPI call wrapper
-Napi::Value GetMediaResultsAsync(const Napi::CallbackInfo& info) {
-    Napi::Env env = info.Env();
-    Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
-
-    // 1. Validate input arguments
-     if (info.Length() != 1 || !info[0].IsString()) {
-        deferred.Reject(Napi::TypeError::New(env, "Expected 1 string argument: playersConfigPath").Value());
-        return deferred.Promise();
-    }
-    std::string configPath = info[0].As<Napi::String>().Utf8Value();
-
-    // 2. Create and queue the AsyncWorker (to be implemented later in worker.cc/hpp)
-    // Example structure:
-    // auto* worker = new MediaDetectionWorker(env, deferred, configPath);
-    // worker->Queue();
-    // For now, reject the promise as it's not implemented
-    deferred.Reject(Napi::Error::New(env, "Async function not yet implemented.").Value());
-
-
-    return deferred.Promise();
-}
 
 
 // Module initialization function
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-    exports.Set(Napi::String::New(env, "getMediaResultsSync"),
-                Napi::Function::New(env, GetMediaResultsSync));
-    exports.Set(Napi::String::New(env, "getMediaResultsAsync"),
-                Napi::Function::New(env, GetMediaResultsAsync));
-    exports.Set(Napi::String::New(env, "getPlayerListSync"),
-                Napi::Function::New(env, GetPlayerListSync));
+    exports.Set(Napi::String::New(env, "getMediaResults"),
+                Napi::Function::New(env, GetMediaResults));
+    exports.Set(Napi::String::New(env, "getPlayerList"),
+                Napi::Function::New(env, GetPlayerList));
     return exports;
 }
 
